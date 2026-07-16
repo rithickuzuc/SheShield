@@ -5,7 +5,9 @@ import '../../../core/widgets/feature_card.dart';
 import '../../walk_mode/screens/walk_mode_screen.dart';
 import '../../guardian/screens/guardian_screen.dart';
 import '../../fake_call/screens/fake_call_screen.dart';
-class DashboardScreen extends StatelessWidget {
+import '../../safe_route/screens/safe_route_screen.dart';
+import '../widgets/sos_card.dart';
+import '../widgets/greeting_card.dart';class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
@@ -76,131 +78,9 @@ class DashboardScreen extends StatelessWidget {
 
             children: [
 
-              const Text(
-                "Good Evening, Praneethha👋",
-                style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                r"Let's keep you safe today.",
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 16,
-                ),
-              ),
-
+              const GreetingCard(),
               const SizedBox(height: 28),
-
-              GestureDetector(
-  onLongPress: () {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("🚨 SOS Triggered (Demo)"),
-      ),
-    );
-  },
-  
-  child: Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(24),
-
-    decoration: BoxDecoration(
-      gradient: const LinearGradient(
-        colors: [
-          Color(0xffFF5A5F),
-          Color(0xffD32F2F),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-
-      borderRadius: BorderRadius.circular(28),
-
-      boxShadow: [
-        BoxShadow(
-          color: Colors.red.withOpacity(0.25),
-          blurRadius: 18,
-          offset: const Offset(0, 10),
-        ),
-      ],
-    ),
-
-    child: Column(
-      children: [
-
-        const Icon(
-          Icons.shield_outlined,
-          color: Colors.white,
-          size: 52,
-        ),
-
-        const SizedBox(height: 18),
-
-        const Text(
-          "Emergency SOS",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
-          ),
-        ),
-
-        const SizedBox(height: 10),
-
-        const Text(
-          "Your trusted contacts will\nbe alerted instantly.",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 15,
-            height: 1.4,
-          ),
-        ),
-
-        const SizedBox(height: 24),
-
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 26,
-            vertical: 12,
-          ),
-
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(40),
-          ),
-
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-
-              Icon(
-                Icons.touch_app,
-                color: Colors.red,
-              ),
-
-              SizedBox(width: 8),
-
-              Text(
-                "PRESS & HOLD",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-),
+              const SosCard(),
 
               const SizedBox(height: 25),
 
@@ -276,7 +156,14 @@ class DashboardScreen extends StatelessWidget {
   subtitle: "Safer navigation",
   icon: Icons.route,
   color: Colors.amber,
-  onTap: () {},
+  onTap: (){
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const SafeRouteScreen(),
+    ),
+  );
+  }
 ),
 
                   FeatureCard(

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-
+import '../models/guardian_model.dart';
 class GuardianTile extends StatelessWidget {
-  final String name;
-  final String phone;
-  final bool isOnline;
+  final GuardianModel guardian;
+final VoidCallback onEdit;
+final VoidCallback onDelete;
 
   const GuardianTile({
     super.key,
-    required this.name,
-    required this.phone,
-    required this.isOnline,
+    required this.guardian,
+
+  required this.onEdit,
+
+  required this.onDelete,
   });
 
   @override
@@ -42,7 +44,7 @@ class GuardianTile extends StatelessWidget {
                   radius: 28,
                   backgroundColor: Colors.deepPurple.shade100,
                   child: Text(
-                    name[0],
+                    guardian.name[0],
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -59,7 +61,7 @@ class GuardianTile extends StatelessWidget {
                     children: [
 
                       Text(
-                        name,
+                       guardian.name,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class GuardianTile extends StatelessWidget {
                       const SizedBox(height: 4),
 
                       Text(
-                        phone,
+                        guardian.phone,
                         style: TextStyle(
                           color: Colors.grey.shade600,
                         ),
@@ -84,7 +86,7 @@ class GuardianTile extends StatelessWidget {
                     Icon(
                       Icons.circle,
                       size: 12,
-                      color: isOnline
+                      color: guardian.isOnline
                           ? Colors.green
                           : Colors.red,
                     ),
@@ -92,13 +94,13 @@ class GuardianTile extends StatelessWidget {
                     const SizedBox(height: 4),
 
                     Text(
-                      isOnline
+                      guardian.isOnline
                           ? "Online"
                           : "Offline",
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: isOnline
+                        color: guardian.isOnline
                             ? Colors.green
                             : Colors.red,
                       ),
@@ -111,44 +113,57 @@ class GuardianTile extends StatelessWidget {
             const SizedBox(height: 18),
 
             Row(
-              children: [
-
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Calling $name..."),
-                        ),
-                      );
-                    },
-
-                    icon: const Icon(Icons.call),
-
-                    label: const Text("Call"),
-                  ),
-                ),
-
-                const SizedBox(width: 12),
-
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Messaging $name..."),
-                        ),
-                      );
-                    },
-
-                    icon: const Icon(Icons.message),
-
-                    label: const Text("Message"),
-                  ),
-                ),
-              ],
+  children: [
+    Expanded(
+      child: ElevatedButton.icon(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Calling ${guardian.name}..."),
             ),
-          ],
+          );
+        },
+        icon: const Icon(Icons.call),
+        label: const Text("Call"),
+      ),
+    ),
+
+    const SizedBox(width: 12),
+
+    IconButton(
+      tooltip: "Message",
+      onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Messaging ${guardian.name}..."),
+          ),
+        );
+      },
+      icon: const Icon(
+        Icons.message,
+        color: Colors.deepPurple,
+      ),
+    ),
+
+    IconButton(
+      tooltip: "Edit",
+      onPressed: onEdit,
+      icon: const Icon(
+        Icons.edit,
+        color: Colors.orange,
+      ),
+    ),
+
+    IconButton(
+      tooltip: "Delete",
+      onPressed: onDelete,
+      icon: const Icon(
+        Icons.delete,
+        color: Colors.red,
+      ),
+    ),
+  ],
+)         ],
         ),
       ),
     );

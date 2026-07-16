@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_color.dart';
 import '../../../core/widgets/feature_card.dart';
+import '../../fake_call/screens/incoming_call_screen.dart';
 import '../../walk_mode/screens/walk_mode_screen.dart';
 import '../../guardian/screens/guardian_screen.dart';
 import '../../fake_call/screens/fake_call_screen.dart';

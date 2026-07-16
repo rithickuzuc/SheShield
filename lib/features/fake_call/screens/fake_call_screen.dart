@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_color.dart';
-
+import '../screens/incoming_call_screen.dart';
+import '../services/fake_call_service.dart';
 class FakeCallScreen extends StatelessWidget {
   const FakeCallScreen({super.key});
 
@@ -15,86 +16,125 @@ class FakeCallScreen extends StatelessWidget {
         centerTitle: true,
       ),
 
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
 
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
 
-              const CircleAvatar(
-                radius: 70,
-                backgroundColor: Colors.deepPurple,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 70,
-                ),
+            const SizedBox(height: 20),
+
+            const Icon(
+              Icons.phone_in_talk_rounded,
+              size: 90,
+              color: Colors.deepPurple,
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              "Fake Incoming Call",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
               ),
+            ),
 
-              const SizedBox(height: 25),
+            const SizedBox(height: 10),
 
-              const Text(
-                "Mom",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              "Use this feature to simulate an incoming call when you need a safe reason to leave an uncomfortable situation.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey.shade700,
+                fontSize: 16,
               ),
+            ),
 
-              const SizedBox(height: 8),
+            const SizedBox(height: 40),
 
-              Text(
-                "Incoming Call...",
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 18,
-                ),
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
-
-              const SizedBox(height: 60),
-
-              Row(
-                children: [
-
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        minimumSize: const Size.fromHeight(60),
-                      ),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Call Accepted"),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.call),
-                      label: const Text("Accept"),
-                    ),
+              child: const ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.deepPurple,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
                   ),
-
-                  const SizedBox(width: 16),
-
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        minimumSize: const Size.fromHeight(60),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.call_end),
-                      label: const Text("Decline"),
-                    ),
+                ),
+                title: Text(
+                  "Mom",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
+                ),
+                subtitle: Text("Incoming caller"),
               ),
-            ],
+            ),
+
+            const SizedBox(height: 20),
+
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const ListTile(
+                leading: Icon(Icons.timer),
+                title: Text("Delay"),
+                subtitle: Text("2 Seconds"),
+              ),
+            ),
+
+            const Spacer(),
+
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton.icon(
+               onPressed: () async {
+  final service = FakeCallService();
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Fake call will start in 2 seconds..."),
+      duration: Duration(seconds: 2),
+    ),
+  );
+
+  await service.startFakeCall(
+    delaySeconds: 2,
+    onCallStart: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => IncomingCallScreen(
+            service: service,
+            caller: service.defaultCaller,
           ),
+        ),
+      );
+    },
+  );
+},
+                icon: const Icon(Icons.play_arrow),
+                label: const Text(
+                  "START FAKE CALL",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );

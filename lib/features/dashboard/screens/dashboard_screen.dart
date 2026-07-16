@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/widgets/feature_card.dart';
 import '../../walk_mode/screens/walk_mode_screen.dart';
-
+import '../../guardian/screens/guardian_screen.dart';
+import '../../fake_call/screens/fake_call_screen.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -227,9 +228,10 @@ class DashboardScreen extends StatelessWidget {
   icon: Icons.people_alt_outlined,
   color: Colors.blue,
   onTap: () {
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text("Add Guardian feature coming soon."),
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const GuardianScreen(),
     ),
   );
 },
@@ -253,7 +255,14 @@ class DashboardScreen extends StatelessWidget {
   subtitle: "Quick escape",
   icon: Icons.call,
   color: Colors.orange,
-  onTap: () {},
+ onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const FakeCallScreen(),
+    ),
+  );
+},
 ),
 
                 ],

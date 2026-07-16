@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_color.dart';
-import '../../../core/widgets/bottom_navbar.dart';
 import '../widgets/guardian_tile.dart';
 
 class GuardianScreen extends StatelessWidget {
@@ -17,53 +16,80 @@ class GuardianScreen extends StatelessWidget {
         centerTitle: true,
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
+      body: SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
 
-            const GuardianTile(
-              name: "Mother",
-              phone: "+91 98765 43210",
-              isOnline: true,
-            ),
+        const Text(
+          "Trusted Guardians",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
 
-            const GuardianTile(
-              name: "Father",
-              phone: "+91 98765 12345",
-              isOnline: true,
-            ),
+        const SizedBox(height: 6),
 
-            const GuardianTile(
-              name: "Brother",
-              phone: "+91 98765 67890",
-              isOnline: false,
-            ),
+        Text(
+          "Your trusted contacts for emergencies.",
+          style: TextStyle(
+            color: Colors.grey.shade600,
+            fontSize: 16,
+          ),
+        ),
 
-            const Spacer(),
+        const SizedBox(height: 24),
 
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.person_add),
-                label: const Text(
-                  "ADD GUARDIAN",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+        const GuardianTile(
+          name: "Mother",
+          phone: "+91 98765 43210",
+          isOnline: true,
+        ),
+
+        const GuardianTile(
+          name: "Father",
+          phone: "+91 98765 12345",
+          isOnline: true,
+        ),
+
+        const GuardianTile(
+          name: "Brother",
+          phone: "+91 98765 67890",
+          isOnline: false,
+        ),
+
+        const SizedBox(height: 25),
+
+        SizedBox(
+          width: double.infinity,
+          height: 55,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Add Guardian feature coming soon."),
                 ),
+              );
+            },
+            icon: const Icon(Icons.person_add),
+            label: const Text(
+              "ADD GUARDIAN",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
+          ),
         ),
-      ),
 
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: 1,
-        onTap: (index) {},
-      ),
+        const SizedBox(height: 20),
+
+      ],
+    ),
+  ),
+),
     );
   }
 }

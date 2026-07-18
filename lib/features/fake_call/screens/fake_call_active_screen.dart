@@ -20,7 +20,9 @@ State<FakeCallActiveScreen> createState() =>
 class _FakeCallActiveScreenState
     extends State<FakeCallActiveScreen> {
 
+ 
   Timer? _timer;
+Timer? _voiceTimer;
 
   int _seconds = 0;
   bool _speakerOn = false;
@@ -31,12 +33,14 @@ void initState() {
   super.initState();
 
   // Start fake voice after the call connects
-  Future.delayed(
-    const Duration(seconds: 2), // More realistic than 300ms
-    () {
+  _voiceTimer = Timer(
+  const Duration(seconds: 2),
+  () {
+    if (mounted) {
       widget.service.playFakeVoice();
-    },
-  );
+    }
+  },
+);
 
   // Start call timer
   _timer = Timer.periodic(
@@ -49,10 +53,14 @@ void initState() {
   );
 }
   @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
+void dispose() {
+  _timer?.cancel();
+  _voiceTimer?.cancel();
+
+  widget.service.stopAudio();
+
+  super.dispose();
+}
 
   String get formattedTime {
 
@@ -188,9 +196,13 @@ _buildAction(
               const SizedBox(height: 45),
 
               GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () async {
+  await widget.service.stopAudio();
+
+  if (mounted) {
+    Navigator.pop(context);
+  }
+},
                 child: Container(
                   height: 82,
                   width: 82,

@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>SheShield uses your location to share your position with trusted guardians during an emergency.</string>
+	<key>NSMicrophoneUsageDescription</key>
+<string>SheShield uses the microphone to detect emergency voice commands.</string>
+
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>SheShield uses speech recognition to detect emergency commands such as help and danger.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
